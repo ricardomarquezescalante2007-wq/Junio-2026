@@ -1,0 +1,1400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Mural VR – Junio 2024</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+<style>
+
+/* ═══════════════════════════════════════
+   RESET
+═══════════════════════════════════════ */
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+:root{
+--bg:#030b18;
+--cyan:#00f5ff;
+--green:#39ff14;
+--pink:#ff2d78;
+--orange:#ff8c00;
+--purple:#a855f7;
+--yellow:#ffe600;
+--blue:#1a6fff;
+--white:#e8f4ff;
+
+--panel-bg:rgba(0,20,50,0.80);
+
+--gc:0 0 8px var(--cyan),0 0 22px rgba(0,245,255,.35);
+--gg:0 0 8px var(--green),0 0 22px rgba(57,255,20,.35);
+--gp:0 0 8px var(--pink),0 0 22px rgba(255,45,120,.35);
+--go:0 0 8px var(--orange),0 0 22px rgba(255,140,0,.35);
+}
+
+body{
+background:var(--bg);
+font-family:'Rajdhani',sans-serif;
+color:var(--white);
+overflow-x:hidden;
+cursor:crosshair;
+position:relative;
+}
+
+/* ═══════════════════════════════════════
+   CYBER BACKGROUND
+═══════════════════════════════════════ */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+linear-gradient(
+90deg,
+transparent 0%,
+rgba(0,255,255,.03) 50%,
+transparent 100%
+);
+animation:bgMove 8s linear infinite;
+pointer-events:none;
+z-index:0;
+}
+
+@keyframes bgMove{
+0%{
+transform:translateX(-100%);
+}
+100%{
+transform:translateX(100%);
+}
+}
+
+body::after{
+content:'';
+position:fixed;
+inset:0;
+z-index:1;
+pointer-events:none;
+
+background:
+repeating-linear-gradient(
+0deg,
+transparent,
+transparent 2px,
+rgba(0,245,255,.015) 2px,
+rgba(0,245,255,.015) 4px
+);
+
+animation:scanlines 8s linear infinite;
+}
+
+@keyframes scanlines{
+0%{
+background-position:0 0;
+}
+100%{
+background-position:0 100px;
+}
+}
+
+.bg-layer{
+position:fixed;
+inset:0;
+z-index:0;
+pointer-events:none;
+
+background:
+radial-gradient(
+ellipse 90% 55% at 50% 0%,
+rgba(0,100,200,.22) 0%,
+transparent 65%
+),
+
+radial-gradient(
+ellipse 60% 45% at 85% 85%,
+rgba(168,85,247,.14) 0%,
+transparent 60%
+),
+
+radial-gradient(
+ellipse 50% 40% at 5% 70%,
+rgba(57,255,20,.08) 0%,
+transparent 55%
+);
+}
+
+#stars{
+position:fixed;
+inset:0;
+z-index:0;
+pointer-events:none;
+}
+
+.star{
+position:absolute;
+border-radius:50%;
+background:#fff;
+animation:twinkle var(--d,3s) ease-in-out infinite alternate;
+}
+
+@keyframes twinkle{
+from{
+opacity:.08;
+}
+to{
+opacity:.95;
+}
+}
+
+/* ═══════════════════════════════════════
+   MAIN WRAPPER
+═══════════════════════════════════════ */
+
+.mural{
+position:relative;
+z-index:2;
+max-width:1500px;
+margin:0 auto;
+padding:20px 16px 50px;
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+
+.header{
+text-align:center;
+margin-bottom:10px;
+animation:fadeDown .9s ease both;
+}
+
+.header h1{
+font-family:'Orbitron',sans-serif;
+font-size:clamp(1.5rem,4vw,3.2rem);
+font-weight:900;
+letter-spacing:5px;
+text-transform:uppercase;
+color:var(--white);
+
+text-shadow:
+0 0 10px var(--cyan),
+0 0 20px var(--cyan);
+
+animation:glowTitle 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowTitle{
+
+from{
+text-shadow:
+0 0 10px var(--cyan),
+0 0 20px var(--cyan);
+}
+
+to{
+text-shadow:
+0 0 20px var(--cyan),
+0 0 40px var(--purple),
+0 0 60px var(--pink);
+}
+
+}
+
+.header .sub{
+font-family:'Orbitron',sans-serif;
+font-size:clamp(.65rem,1.6vw,1rem);
+letter-spacing:7px;
+color:var(--yellow);
+text-shadow:0 0 14px var(--yellow);
+margin-top:10px;
+}
+
+.header .scan-tag{
+display:inline-block;
+margin-top:7px;
+font-size:clamp(.6rem,1.3vw,.85rem);
+letter-spacing:3px;
+color:var(--cyan);
+text-shadow:var(--gc);
+
+animation:pulse-txt 2s ease-in-out infinite;
+}
+
+@keyframes pulse-txt{
+0%,100%{
+opacity:1;
+}
+50%{
+opacity:.35;
+}
+}
+
+.divider{
+height:2px;
+margin:10px 0 16px;
+
+background:
+linear-gradient(
+90deg,
+transparent,
+var(--cyan),
+var(--purple),
+var(--pink),
+transparent
+);
+
+box-shadow:0 0 12px var(--cyan);
+}
+
+.fecha-badge{
+text-align:center;
+margin-bottom:20px;
+}
+
+.fecha-badge span{
+display:inline-block;
+font-family:'Orbitron',sans-serif;
+font-size:clamp(.9rem,2.2vw,1.5rem);
+font-weight:700;
+letter-spacing:9px;
+
+color:var(--cyan);
+
+border:2px solid var(--cyan);
+
+padding:6px 30px;
+
+border-radius:4px;
+
+box-shadow:
+var(--gc),
+inset 0 0 20px rgba(0,245,255,.06);
+
+animation:fadeIn 1s ease both .2s;
+}
+
+/* ═══════════════════════════════════════
+   TOP ICONS
+═══════════════════════════════════════ */
+
+.top-icons{
+display:flex;
+justify-content:center;
+gap:26px;
+margin-bottom:16px;
+font-size:1.5rem;
+animation:fadeIn 1s ease both .35s;
+}
+
+.top-icons span{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+
+width:44px;
+height:44px;
+
+border-radius:50%;
+border:1px solid currentColor;
+
+filter:drop-shadow(0 0 6px currentColor);
+
+transition:transform .3s;
+cursor:pointer;
+}
+
+.top-icons span:hover{
+transform:scale(1.25) rotate(15deg);
+}
+
+/* ═══════════════════════════════════════
+   GRID
+═══════════════════════════════════════ */
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1.08fr 1fr;
+gap:16px;
+align-items:start;
+position:relative;
+}
+
+/* ═══════════════════════════════════════
+   PANELS
+═══════════════════════════════════════ */
+
+.panel{
+background:var(--panel-bg);
+
+border-radius:14px;
+
+padding:18px 16px;
+
+position:relative;
+
+overflow:hidden;
+
+backdrop-filter:blur(15px);
+
+transform-style:preserve-3d;
+perspective:1000px;
+
+border:1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 0 25px rgba(0,245,255,.08),
+0 10px 30px rgba(0,0,0,.45);
+
+animation:
+fadeUp .75s ease both,
+neonFloat 4s ease-in-out infinite;
+
+transition:transform .2s ease;
+}
+
+@keyframes neonFloat{
+0%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-10px);
+}
+100%{
+transform:translateY(0);
+}
+}
+
+.panel::before{
+content:'';
+position:absolute;
+inset:0;
+border-radius:14px;
+padding:2px;
+
+background:
+linear-gradient(
+135deg,
+var(--c1,var(--cyan)),
+var(--c2,var(--purple))
+);
+
+-webkit-mask:
+linear-gradient(#fff 0 0) content-box,
+linear-gradient(#fff 0 0);
+
+-webkit-mask-composite:destination-out;
+mask-composite:exclude;
+
+pointer-events:none;
+}
+
+.panel-title{
+font-family:'Orbitron',sans-serif;
+font-size:clamp(.65rem,1.4vw,.9rem);
+font-weight:700;
+letter-spacing:3px;
+text-transform:uppercase;
+margin-bottom:3px;
+}
+
+.panel-subtitle{
+font-size:.7rem;
+letter-spacing:2px;
+opacity:.5;
+text-transform:uppercase;
+margin-bottom:14px;
+}
+
+.panel-number{
+font-family:'Orbitron',sans-serif;
+font-size:1.6rem;
+font-weight:900;
+
+opacity:.1;
+
+position:absolute;
+top:8px;
+right:12px;
+}
+
+.corner{
+position:absolute;
+width:18px;
+height:18px;
+border-style:solid;
+opacity:.5;
+}
+
+.c-tl{
+top:4px;
+left:4px;
+border-width:2px 0 0 2px;
+}
+
+.c-tr{
+top:4px;
+right:4px;
+border-width:2px 2px 0 0;
+}
+
+.c-bl{
+bottom:4px;
+left:4px;
+border-width:0 0 2px 2px;
+}
+
+.c-br{
+bottom:4px;
+right:4px;
+border-width:0 2px 2px 0;
+}
+
+/* ═══════════════════════════════════════
+   PANEL COLORS
+═══════════════════════════════════════ */
+
+.p1{
+--c1:var(--cyan);
+--c2:var(--green);
+}
+
+.p2{
+--c1:var(--green);
+--c2:var(--blue);
+}
+
+.p3{
+--c1:var(--pink);
+--c2:var(--orange);
+}
+
+.p4{
+--c1:var(--purple);
+--c2:var(--cyan);
+}
+
+.p1 .panel-title{
+color:var(--cyan);
+text-shadow:var(--gc);
+}
+
+.p2 .panel-title{
+color:var(--green);
+text-shadow:var(--gg);
+}
+
+.p3 .panel-title{
+color:var(--pink);
+text-shadow:var(--gp);
+}
+
+.p4 .panel-title{
+color:var(--purple);
+text-shadow:0 0 8px var(--purple);
+}
+
+/* ═══════════════════════════════════════
+   DATE CARDS
+═══════════════════════════════════════ */
+
+.date-card{
+display:flex;
+gap:10px;
+align-items:flex-start;
+
+background:rgba(0,245,255,.06);
+
+border:1px solid rgba(0,245,255,.25);
+
+border-radius:10px;
+
+padding:10px;
+
+margin-bottom:10px;
+
+transition:all .25s;
+
+cursor:pointer;
+
+position:relative;
+
+overflow:hidden;
+}
+
+.date-card:hover{
+border-color:var(--cyan);
+
+box-shadow:var(--gc);
+
+transform:translateX(4px);
+}
+
+.date-icon-3d{
+width:58px;
+height:58px;
+
+flex-shrink:0;
+
+border-radius:10px;
+
+overflow:hidden;
+
+border:1px solid rgba(0,245,255,.4);
+
+background:
+radial-gradient(
+circle at 30% 25%,
+rgba(0,245,255,.2),
+rgba(0,30,80,.9)
+);
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+box-shadow:
+0 8px 20px rgba(0,0,0,.5),
+inset 0 1px 0 rgba(255,255,255,.15);
+
+transform:
+perspective(200px)
+rotateY(-8deg)
+rotateX(4deg);
+
+transition:transform .3s;
+}
+
+.date-card:hover .date-icon-3d{
+transform:
+perspective(200px)
+rotateY(0deg)
+rotateX(0deg)
+scale(1.08);
+}
+
+.date-icon-3d img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.date-info{
+flex:1;
+}
+
+.date-num{
+font-family:'Orbitron',sans-serif;
+font-size:.62rem;
+color:var(--cyan);
+letter-spacing:2px;
+font-weight:700;
+margin-bottom:2px;
+}
+
+.date-name{
+font-size:.78rem;
+font-weight:700;
+color:var(--white);
+text-transform:uppercase;
+line-height:1.3;
+}
+
+.date-desc{
+font-size:.65rem;
+color:rgba(232,244,255,.6);
+margin-top:3px;
+line-height:1.4;
+}
+
+/* ═══════════════════════════════════════
+   BUTTON IA
+═══════════════════════════════════════ */
+
+#aiBtn{
+position:fixed;
+bottom:20px;
+right:20px;
+
+width:70px;
+height:70px;
+
+border-radius:50%;
+border:none;
+
+background:
+linear-gradient(
+135deg,
+var(--cyan),
+var(--purple)
+);
+
+color:white;
+
+font-family:'Orbitron',sans-serif;
+font-weight:900;
+letter-spacing:2px;
+
+cursor:pointer;
+
+z-index:9999;
+
+box-shadow:
+0 0 20px var(--cyan),
+0 0 40px rgba(0,245,255,.4);
+
+transition:.3s;
+}
+
+#aiBtn:hover{
+transform:scale(1.1) rotate(10deg);
+
+box-shadow:
+0 0 30px var(--cyan),
+0 0 60px rgba(0,245,255,.7);
+}
+
+/* ═══════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════ */
+
+@keyframes fadeDown{
+from{
+opacity:0;
+transform:translateY(-24px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(24px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+}
+to{
+opacity:1;
+}
+}
+
+/* ═══════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════ */
+
+@media(max-width:1000px){
+
+.grid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:768px){
+
+.panel{
+padding:14px;
+}
+
+.top-icons{
+flex-wrap:wrap;
+}
+
+.header .sub{
+letter-spacing:3px;
+}
+
+.fecha-badge span{
+letter-spacing:4px;
+padding:6px 15px;
+}
+
+}
+
+@media(max-width:650px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+}
+
+/* ═══════════════════════════════════════
+   FLOAT OBJECTS
+═══════════════════════════════════════ */
+
+.float-obj{
+position:fixed;
+pointer-events:none;
+z-index:1;
+font-size:2rem;
+
+filter:drop-shadow(0 0 10px var(--fc,var(--cyan)));
+
+animation:
+float-obj-anim var(--fd,8s)
+ease-in-out infinite;
+
+opacity:.18;
+}
+
+@keyframes float-obj-anim{
+
+0%,100%{
+transform:translateY(0) rotate(0deg) scale(1);
+}
+
+33%{
+transform:translateY(-30px) rotate(12deg) scale(1.05);
+}
+
+66%{
+transform:translateY(15px) rotate(-8deg) scale(.95);
+}
+
+}
+
+/* ═══════════════════════════════════════
+   DECO RINGS
+═══════════════════════════════════════ */
+
+.deco-ring{
+position:fixed;
+border-radius:50%;
+border:1px solid;
+opacity:.06;
+animation:spin-slow var(--s,22s) linear infinite;
+pointer-events:none;
+z-index:0;
+}
+
+@keyframes spin-slow{
+from{
+transform:rotate(0deg);
+}
+to{
+transform:rotate(360deg);
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="bg-layer"></div>
+<div id="stars"></div>
+
+<!-- RINGS -->
+
+<div class="deco-ring"
+style="width:600px;height:600px;border-color:var(--cyan);top:-200px;left:-200px;">
+</div>
+
+<div class="deco-ring"
+style="width:450px;height:450px;border-color:var(--purple);bottom:-120px;right:-120px;">
+</div>
+
+<!-- FLOAT OBJECTS -->
+
+<div class="float-obj"
+style="top:8%;left:2%;--fd:7s;--fc:var(--cyan)">
+🛸
+</div>
+
+<div class="float-obj"
+style="top:15%;right:3%;--fd:9s;--fc:var(--purple)">
+🔭
+</div>
+
+<div class="mural">
+
+<!-- HEADER -->
+
+<div class="header">
+
+<h1>Mural del Mes de Junio</h1>
+
+<div class="sub">
+Interactivo • Innovador • Realidad Virtual
+</div>
+
+<div class="scan-tag">
+⟳ ¡Escanea y Descubre!
+</div>
+
+</div>
+
+<div class="divider"></div>
+
+<div class="fecha-badge">
+<span>Junio 2024</span>
+</div>
+
+<!-- ICONS -->
+
+<div class="top-icons">
+
+<span style="color:var(--cyan)">📡</span>
+
+<span style="color:var(--purple)">⚙️</span>
+
+<span style="color:var(--yellow)">💡</span>
+
+<span style="color:var(--green)">🔬</span>
+
+<span style="color:var(--pink)">🥽</span>
+
+</div>
+
+<!-- GRID -->
+
+<div class="grid">
+
+<!-- PANEL 1 -->
+
+<div class="panel p1">
+
+<div class="corner c-tl"></div>
+<div class="corner c-tr"></div>
+<div class="corner c-bl"></div>
+<div class="corner c-br"></div>
+
+<div class="panel-number">01</div>
+
+<div class="panel-title">
+1. Fechas Importantes
+</div>
+
+<div class="panel-subtitle">
+Important Dates – Junio 2024
+</div>
+
+<!-- CARD -->
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+<img src="marina.jpg" alt="Marina">
+</div>
+
+<div class="date-info">
+
+<div class="date-num">1 JUN</div>
+
+<div class="date-name">
+Día de la Marina Nacional
+</div>
+
+<div class="date-desc">
+Homenaje a la Armada de México.
+</div>
+
+</div>
+</div>
+
+<!-- CARD -->
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+<img src="medio_ambiente.jpg" alt="Medio Ambiente">
+</div>
+
+<div class="date-info">
+
+<div class="date-num">5 JUN</div>
+
+<div class="date-name">
+Día Mundial del Medio Ambiente
+</div>
+
+<div class="date-desc">
+Protección del ecosistema global.
+</div>
+
+</div>
+</div>
+
+<!-- CARD -->
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+<img src="oceano.jpg" alt="Océano">
+</div>
+
+<div class="date-info">
+
+<div class="date-num">8 JUN</div>
+
+<div class="date-name">
+Día Mundial de los Océanos
+</div>
+
+<div class="date-desc">
+Celebración de la biodiversidad marina.
+</div>
+
+</div>
+</div>
+
+<!-- CARD -->
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+<img src="sangre.jpg" alt="Sangre">
+</div>
+
+<div class="date-info">
+
+<div class="date-num">14 JUN</div>
+
+<div class="date-name">
+Donante de Sangre
+</div>
+
+<div class="date-desc">
+Reconocimiento a donantes voluntarios.
+</div>
+
+</div>
+</div>
+
+<!-- CARD -->
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+<img src="padre.jpg" alt="Padre">
+</div>
+
+<div class="date-info">
+
+<div class="date-num">21 JUN</div>
+
+<div class="date-name">
+Día del Padre
+</div>
+
+<div class="date-desc">
+Celebración familiar.
+</div>
+
+</div>
+</div>
+
+<!-- CARD -->
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+<img src="solsticio.jpg" alt="Solsticio">
+</div>
+
+<div class="date-info">
+
+<div class="date-num">21 JUN</div>
+
+<div class="date-name">
+Solsticio de Verano
+</div>
+
+<div class="date-desc">
+El día más largo del año.
+</div>
+
+</div>
+</div>
+
+<!-- CARD -->
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+<img src="san_juan.jpg" alt="San Juan">
+</div>
+
+<div class="date-info">
+
+<div class="date-num">24 JUN</div>
+
+<div class="date-name">
+Día de San Juan
+</div>
+
+<div class="date-desc">
+Tradición popular de verano.
+</div>
+
+</div>
+</div>
+
+</div>
+
+<!-- PANEL 2 -->
+
+<div class="panel p2">
+
+<div class="panel-number">02</div>
+
+<div class="panel-title">
+2. Maestro de la semana
+</div>
+
+<div class="panel-subtitle">
+Nombre del Maestro – Tema Destacado
+</div>
+
+<div style="
+height:220px;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:
+linear-gradient(160deg,#001a3a,#002244,#001133);
+border:2px solid var(--cyan);
+box-shadow:var(--gc);
+margin-bottom:20px;
+">
+
+<div style="text-align:center">
+
+<div style="
+  width:100%;
+  padding:6px;
+  border-radius:24px;
+  background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink));
+  box-shadow:
+    0 0 15px var(--cyan),
+    0 0 40px rgba(0,245,255,.5),
+    0 0 60px rgba(168,85,247,.4);
+  animation:neonFloat 4s ease-in-out infinite;
+">
+  <img 
+    src="profesor.jpg" 
+    alt="Profesor"
+    style="
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      border-radius:18px;
+      display:block;
+      border:2px solid rgba(255,255,255,.15);
+    "
+  />
+</div>
+<div style="
+font-family:'Orbitron';
+letter-spacing:2px;
+color:var(--cyan), var(--purple), var(--pink);
+">
+Experiencia VR
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- PANEL 3 -->
+
+<div class="panel p3">
+
+<div class="panel-number">03</div>
+
+<div class="panel-title">
+3. Avisos y Convocatorias
+</div>
+
+<div class="panel-subtitle">
+Open Calls – Junio 2024
+</div>
+
+<div style="
+padding:16px;
+border-radius:12px;
+border:1px solid rgba(255,45,120,.35);
+background:rgba(255,45,120,.06);
+margin-bottom:14px;
+">
+
+<h3 style="
+font-family:'Orbitron';
+margin-bottom:8px;
+color:var(--pink);
+">
+Hackathon 2024
+</h3>
+
+<p style="font-size:.8rem">
+Evento de innovación tecnológica y robótica.
+</p>
+
+</div>
+
+<div style="
+padding:16px;
+border-radius:12px;
+border:1px solid rgba(255,140,0,.35);
+background:rgba(255,140,0,.06);
+">
+
+<h3 style="
+font-family:'Orbitron';
+margin-bottom:8px;
+color:var(--orange);
+">
+Foro Espacial Mexicano
+</h3>
+
+<p style="font-size:.8rem">
+Exploración espacial y satélites.
+</p>
+
+</div>
+
+</div>
+
+<!-- PANEL 4 -->
+
+<div class="panel p4">
+
+<div class="panel-number">04</div>
+
+<div class="panel-title">
+4. Ciencia y Tecnología
+</div>
+
+<div class="panel-subtitle">
+Science & Technology
+</div>
+
+<div style="
+display:flex;
+flex-direction:column;
+gap:12px;
+">
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+🧠
+</div>
+
+<div class="date-info">
+
+<div class="date-name">
+IA y Sostenibilidad
+</div>
+
+<div class="date-desc">
+Machine Learning aplicado al clima.
+</div>
+
+</div>
+
+</div>
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+🤖
+</div>
+
+<div class="date-info">
+
+<div class="date-name">
+Robótica
+</div>
+
+<div class="date-desc">
+Cobots quirúrgicos inteligentes.
+</div>
+
+</div>
+
+</div>
+
+<div class="date-card">
+
+<div class="date-icon-3d">
+🧬
+</div>
+
+<div class="date-info">
+
+<div class="date-name">
+Biotecnología
+</div>
+
+<div class="date-desc">
+CRISPR y edición genética.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- BUTTON -->
+
+<button id="aiBtn">
+IA
+</button>
+
+</div>
+
+<script>
+
+/* ═══════════════════════════════════════
+   STARS
+═══════════════════════════════════════ */
+
+const starsEl=document.getElementById('stars');
+
+for(let i=0;i<100;i++){
+
+const s=document.createElement('div');
+
+s.className='star';
+
+const sz=Math.random()*2.5+.4;
+
+s.style.cssText=`
+width:${sz}px;
+height:${sz}px;
+top:${Math.random()*100}%;
+left:${Math.random()*100}%;
+--d:${(Math.random()*3+1.5).toFixed(1)}s;
+animation-delay:${(Math.random()*4).toFixed(1)}s;
+`;
+
+starsEl.appendChild(s);
+
+}
+
+/* ═══════════════════════════════════════
+   3D PANELS
+═══════════════════════════════════════ */
+
+document.querySelectorAll('.panel').forEach(panel=>{
+
+panel.addEventListener('mousemove',e=>{
+
+const rect=panel.getBoundingClientRect();
+
+const x=e.clientX-rect.left;
+const y=e.clientY-rect.top;
+
+const rotateY=((x/rect.width)-0.5)*10;
+const rotateX=((y/rect.height)-0.5)*-10;
+
+panel.style.transform=
+`
+perspective(1000px)
+rotateX(${rotateX}deg)
+rotateY(${rotateY}deg)
+`;
+
+});
+
+panel.addEventListener('mouseleave',()=>{
+
+panel.style.transform=
+'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+
+});
+
+});
+
+/* ═══════════════════════════════════════
+   INTERACTIVE CLICK
+═══════════════════════════════════════ */
+
+document.querySelectorAll('.date-card').forEach(el=>{
+
+el.addEventListener('click',()=>{
+
+el.style.transition='background .1s';
+
+const origBg=el.style.background;
+
+el.style.background='rgba(0,245,255,0.12)';
+
+setTimeout(()=>{
+
+el.style.background=origBg;
+
+},500);
+
+});
+
+});
+
+/* ═══════════════════════════════════════
+   FLOATING OBJECTS PARALLAX
+═══════════════════════════════════════ */
+
+document.addEventListener('mousemove',e=>{
+
+const mx=(e.clientX/window.innerWidth-.5)*18;
+const my=(e.clientY/window.innerHeight-.5)*10;
+
+document.querySelectorAll('.float-obj').forEach((o,i)=>{
+
+const d=(i%2===0)?1:-1;
+
+o.style.transform=
+`translate(${mx*d*.4}px,${my*d*.4}px)`;
+
+});
+
+});
+
+/* ═══════════════════════════════════════
+   IA BUTTON
+═══════════════════════════════════════ */
+
+const aiBtn=document.getElementById('aiBtn');
+
+aiBtn.addEventListener('click',()=>{
+
+alert('Bienvenido al sistema IA futurista 🚀');
+
+});
+
+</script>
+
+</body>
+</html>
