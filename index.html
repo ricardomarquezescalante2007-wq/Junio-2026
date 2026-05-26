@@ -4,26 +4,27 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-<title>Mural VR – Junio 2024</title>
+<title>Mural Junio 2024</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
 <style>
 
 /* ═══════════════════════════════════════
-   RESET
-═══════════════════════════════════════ */
+   RESET: Limpieza de márgenes y configuraciones globales por defecto
+   ═══════════════════════════════════════ */
 
 *{
 margin:0;
 padding:0;
-box-sizing:border-box;
+box-sizing:border-box; /* Hace que el padding y bordes no afecten el ancho total configurado */
 }
 
 html{
-scroll-behavior:smooth;
+scroll-behavior:smooth; /* Transición suave al usar enlaces de scroll */
 }
 
+/* Declaración de variables globales de color (Paleta Neón/Cyberpunk) */
 :root{
 --bg:#030b18;
 --cyan:#00f5ff;
@@ -35,8 +36,10 @@ scroll-behavior:smooth;
 --blue:#1a6fff;
 --white:#e8f4ff;
 
+/* Fondo semitransparente para los paneles oscuros */
 --panel-bg:rgba(0,20,50,0.80);
 
+/* Sombras con efectos de resplandor neón (Glow) para los diferentes colores */
 --gc:0 0 8px var(--cyan),0 0 22px rgba(0,245,255,.35);
 --gg:0 0 8px var(--green),0 0 22px rgba(57,255,20,.35);
 --gp:0 0 8px var(--pink),0 0 22px rgba(255,45,120,.35);
@@ -47,15 +50,16 @@ body{
 background:var(--bg);
 font-family:'Rajdhani',sans-serif;
 color:var(--white);
-overflow-x:hidden;
-cursor:crosshair;
+overflow-x:hidden; /* Evita el desplazamiento horizontal no deseado */
+cursor:crosshair; /* Cambia el puntero del mouse a una mira */
 position:relative;
 }
 
 /* ═══════════════════════════════════════
-   CYBER BACKGROUND
-═══════════════════════════════════════ */
+   CYBER BACKGROUND: Capas de efectos para el fondo espacial/cyberpunk
+   ═══════════════════════════════════════ */
 
+/* Capa antes del contenido: Brillo vertical cian que cruza la pantalla */
 body::before{
 content:'';
 position:fixed;
@@ -67,11 +71,12 @@ transparent 0%,
 rgba(0,255,255,.03) 50%,
 transparent 100%
 );
-animation:bgMove 8s linear infinite;
-pointer-events:none;
+animation:bgMove 8s linear infinite; /* Animación de desplazamiento continuo */
+pointer-events:none; /* Evita que interfiera con los clics del usuario */
 z-index:0;
 }
 
+/* Animación del brillo cian de izquierda a derecha */
 @keyframes bgMove{
 0%{
 transform:translateX(-100%);
@@ -81,6 +86,7 @@ transform:translateX(100%);
 }
 }
 
+/* Capa después del contenido: Líneas de escaneo horizontales (Efecto Monitor CTR) */
 body::after{
 content:'';
 position:fixed;
@@ -97,9 +103,10 @@ rgba(0,245,255,.015) 2px,
 rgba(0,245,255,.015) 4px
 );
 
-animation:scanlines 8s linear infinite;
+animation:scanlines 8s linear infinite; /* Animación de desplazamiento vertical de las líneas */
 }
 
+/* Animación para mover las líneas de escaneo hacia abajo */
 @keyframes scanlines{
 0%{
 background-position:0 0;
@@ -109,6 +116,7 @@ background-position:0 100px;
 }
 }
 
+/* Capa de fondo con múltiples gradientes radiales de color difuminado (Luces ambientales) */
 .bg-layer{
 position:fixed;
 inset:0;
@@ -135,6 +143,7 @@ transparent 55%
 );
 }
 
+/* Contenedor padre de las estrellas generadas por JavaScript */
 #stars{
 position:fixed;
 inset:0;
@@ -142,13 +151,15 @@ z-index:0;
 pointer-events:none;
 }
 
+/* Clase base para cada estrella individual */
 .star{
 position:absolute;
 border-radius:50%;
 background:#fff;
-animation:twinkle var(--d,3s) ease-in-out infinite alternate;
+animation:twinkle var(--d,3s) ease-in-out infinite alternate; /* Parpadeo con duración variable */
 }
 
+/* Animación de parpadeo (Cambio de opacidad) de las estrellas */
 @keyframes twinkle{
 from{
 opacity:.08;
@@ -159,30 +170,30 @@ opacity:.95;
 }
 
 /* ═══════════════════════════════════════
-   MAIN WRAPPER
-═══════════════════════════════════════ */
+   MAIN WRAPPER: Contenedor general de la interfaz
+   ═══════════════════════════════════════ */
 
 .mural{
 position:relative;
-z-index:2;
+z-index:2; /* Coloca el contenido por encima del fondo y los efectos traseros */
 max-width:1500px;
 margin:0 auto;
 padding:20px 16px 50px;
 }
 
 /* ═══════════════════════════════════════
-   HEADER
-═══════════════════════════════════════ */
+   HEADER: Título, subtítulo y badges superiores
+   ═══════════════════════════════════════ */
 
 .header{
 text-align:center;
 margin-bottom:10px;
-animation:fadeDown .9s ease both;
+animation:fadeDown .9s ease both; /* Animación de entrada de arriba hacia abajo */
 }
 
 .header h1{
 font-family:'Orbitron',sans-serif;
-font-size:clamp(1.5rem,4vw,3.2rem);
+font-size:clamp(1.5rem,4vw,3.2rem); /* Escala el tamaño del texto según la pantalla */
 font-weight:900;
 letter-spacing:5px;
 text-transform:uppercase;
@@ -192,9 +203,10 @@ text-shadow:
 0 0 10px var(--cyan),
 0 0 20px var(--cyan);
 
-animation:glowTitle 3s ease-in-out infinite alternate;
+animation:glowTitle 3s ease-in-out infinite alternate; /* Cambio dinámico del color de sombra */
 }
 
+/* Animación de cambio de color de sombras neón para el título principal */
 @keyframes glowTitle{
 
 from{
@@ -229,9 +241,10 @@ letter-spacing:3px;
 color:var(--cyan);
 text-shadow:var(--gc);
 
-animation:pulse-txt 2s ease-in-out infinite;
+animation:pulse-txt 2s ease-in-out infinite; /* Animación de parpadeo suave */
 }
 
+/* Animación de pulso para el texto de escaneo */
 @keyframes pulse-txt{
 0%,100%{
 opacity:1;
@@ -241,6 +254,7 @@ opacity:.35;
 }
 }
 
+/* Línea divisoria decorativa con degradado multicolor */
 .divider{
 height:2px;
 margin:10px 0 16px;
@@ -263,6 +277,7 @@ text-align:center;
 margin-bottom:20px;
 }
 
+/* Recuadro de la fecha con bordes e iluminación interna */
 .fecha-badge span{
 display:inline-block;
 font-family:'Orbitron',sans-serif;
@@ -286,8 +301,8 @@ animation:fadeIn 1s ease both .2s;
 }
 
 /* ═══════════════════════════════════════
-   TOP ICONS
-═══════════════════════════════════════ */
+   TOP ICONS: Iconos decorativos superiores flotantes
+   ═══════════════════════════════════════ */
 
 .top-icons{
 display:flex;
@@ -315,25 +330,26 @@ transition:transform .3s;
 cursor:pointer;
 }
 
+/* Animación al pasar el mouse por encima de los iconos superiores */
 .top-icons span:hover{
 transform:scale(1.25) rotate(15deg);
 }
 
 /* ═══════════════════════════════════════
-   GRID
-═══════════════════════════════════════ */
+   GRID: Estructura de columnas del mural para pantallas grandes
+   ═══════════════════════════════════════ */
 
 .grid{
 display:grid;
-grid-template-columns:1fr 1.08fr 1fr;
+grid-template-columns:1fr 1.08fr 1fr; /* Tres columnas asimétricas */
 gap:16px;
 align-items:start;
 position:relative;
 }
 
 /* ═══════════════════════════════════════
-   PANELS
-═══════════════════════════════════════ */
+   PANELS: Cajas contenedoras principales de información
+   ═══════════════════════════════════════ */
 
 .panel{
 background:var(--panel-bg);
@@ -346,9 +362,9 @@ position:relative;
 
 overflow:hidden;
 
-backdrop-filter:blur(15px);
+backdrop-filter:blur(15px); /* Efecto cristal esmerilado (Glassmorphism) */
 
-transform-style:preserve-3d;
+transform-style:preserve-3d; /* Permite efectos tridimensionales a los hijos mediante JS */
 perspective:1000px;
 
 border:1px solid rgba(255,255,255,.08);
@@ -359,11 +375,12 @@ box-shadow:
 
 animation:
 fadeUp .75s ease both,
-neonFloat 4s ease-in-out infinite;
+neonFloat 4s ease-in-out infinite; /* Flotación cíclica vertical */
 
 transition:transform .2s ease;
 }
 
+/* Animación de flotación de los paneles */
 @keyframes neonFloat{
 0%{
 transform:translateY(0);
@@ -376,6 +393,7 @@ transform:translateY(0);
 }
 }
 
+/* Borde interno degradado fino mediante máscaras avanzadas */
 .panel::before{
 content:'';
 position:absolute;
@@ -417,6 +435,7 @@ text-transform:uppercase;
 margin-bottom:14px;
 }
 
+/* Número decorativo transparente en la esquina superior derecha de cada panel */
 .panel-number{
 font-family:'Orbitron',sans-serif;
 font-size:1.6rem;
@@ -429,6 +448,7 @@ top:8px;
 right:12px;
 }
 
+/* Esquinas decorativas retro-futuristas de los paneles */
 .corner{
 position:absolute;
 width:18px;
@@ -462,8 +482,8 @@ border-width:0 2px 2px 0;
 }
 
 /* ═══════════════════════════════════════
-   PANEL COLORS
-═══════════════════════════════════════ */
+   PANEL COLORS: Definición de variables específicas de color por panel
+   ═══════════════════════════════════════ */
 
 .p1{
 --c1:var(--cyan);
@@ -485,6 +505,7 @@ border-width:0 2px 2px 0;
 --c2:var(--cyan);
 }
 
+/* Aplicación de colores específicos de sombra y texto a los títulos de los paneles */
 .p1 .panel-title{
 color:var(--cyan);
 text-shadow:var(--gc);
@@ -506,8 +527,8 @@ text-shadow:0 0 8px var(--purple);
 }
 
 /* ═══════════════════════════════════════
-   DATE CARDS
-═══════════════════════════════════════ */
+   DATE CARDS: Tarjetas de efemérides individuales dentro de los paneles
+   ═══════════════════════════════════════ */
 
 .date-card{
 display:flex;
@@ -533,14 +554,16 @@ position:relative;
 overflow:hidden;
 }
 
+/* Efectos al pasar el mouse por encima de una tarjeta de fecha */
 .date-card:hover{
 border-color:var(--cyan);
 
 box-shadow:var(--gc);
 
-transform:translateX(4px);
+transform:translateX(4px); /* Desplazamiento sutil a la derecha */
 }
 
+/* Contenedor simulado en 3D para la foto/ícono de la efeméride */
 .date-icon-3d{
 width:58px;
 height:58px;
@@ -568,6 +591,7 @@ box-shadow:
 0 8px 20px rgba(0,0,0,.5),
 inset 0 1px 0 rgba(255,255,255,.15);
 
+/* Rotación tridimensional por defecto */
 transform:
 perspective(200px)
 rotateY(-8deg)
@@ -576,6 +600,7 @@ rotateX(4deg);
 transition:transform .3s;
 }
 
+/* Restaura y escala la tarjeta 3D interna cuando se interactúa con su contenedor padre */
 .date-card:hover .date-icon-3d{
 transform:
 perspective(200px)
@@ -619,8 +644,8 @@ line-height:1.4;
 }
 
 /* ═══════════════════════════════════════
-   BUTTON IA
-═══════════════════════════════════════ */
+   BUTTON IA: Botón flotante fijado en la pantalla
+   ═══════════════════════════════════════ */
 
 #aiBtn{
 position:fixed;
@@ -648,7 +673,7 @@ letter-spacing:2px;
 
 cursor:pointer;
 
-z-index:9999;
+z-index:9999; /* Se asegura de estar siempre por encima de todo el contenido */
 
 box-shadow:
 0 0 20px var(--cyan),
@@ -657,6 +682,7 @@ box-shadow:
 transition:.3s;
 }
 
+/* Animación de escala e inclinación en hover */
 #aiBtn:hover{
 transform:scale(1.1) rotate(10deg);
 
@@ -666,8 +692,8 @@ box-shadow:
 }
 
 /* ═══════════════════════════════════════
-   ANIMATIONS
-═══════════════════════════════════════ */
+   ANIMATIONS: Bloques genéricos de transiciones CSS
+   ═══════════════════════════════════════ */
 
 @keyframes fadeDown{
 from{
@@ -701,9 +727,10 @@ opacity:1;
 }
 
 /* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
+   RESPONSIVE: Adaptabilidad para diferentes pantallas (Media Queries)
+   ═══════════════════════════════════════ */
 
+/* Pantallas medianas (Tablets u ordenadores pequeños): Pasa de 3 a 2 columnas */
 @media(max-width:1000px){
 
 .grid{
@@ -712,6 +739,7 @@ grid-template-columns:1fr 1fr;
 
 }
 
+/* Dispositivos móviles: Reajuste de espaciados, fuentes y badges */
 @media(max-width:768px){
 
 .panel{
@@ -719,7 +747,7 @@ padding:14px;
 }
 
 .top-icons{
-flex-wrap:wrap;
+flex-wrap:wrap; /* Permite que los iconos bajen si no caben en una línea */
 }
 
 .header .sub{
@@ -733,6 +761,7 @@ padding:6px 15px;
 
 }
 
+/* Pantallas muy pequeñas (Celulares en vertical): Pasa a una sola columna vertical */
 @media(max-width:650px){
 
 .grid{
@@ -742,8 +771,8 @@ grid-template-columns:1fr;
 }
 
 /* ═══════════════════════════════════════
-   FLOAT OBJECTS
-═══════════════════════════════════════ */
+   FLOAT OBJECTS: Elementos flotantes e independientes (Emojis animados)
+   ═══════════════════════════════════════ */
 
 .float-obj{
 position:fixed;
@@ -755,11 +784,12 @@ filter:drop-shadow(0 0 10px var(--fc,var(--cyan)));
 
 animation:
 float-obj-anim var(--fd,8s)
-ease-in-out infinite;
+ease-in-out infinite; /* Duración de animación personalizada por inline CSS */
 
 opacity:.18;
 }
 
+/* Animación de flotación orgánica oscilante e inclinación */
 @keyframes float-obj-anim{
 
 0%,100%{
@@ -777,19 +807,20 @@ transform:translateY(15px) rotate(-8deg) scale(.95);
 }
 
 /* ═══════════════════════════════════════
-   DECO RINGS
-═══════════════════════════════════════ */
+   DECO RINGS: Anillos orbitales gigantes decorativos en el fondo
+   ═══════════════════════════════════════ */
 
 .deco-ring{
 position:fixed;
 border-radius:50%;
 border:1px solid;
 opacity:.06;
-animation:spin-slow var(--s,22s) linear infinite;
+animation:spin-slow var(--s,22s) linear infinite; /* Rotación lenta infinita */
 pointer-events:none;
 z-index:0;
 }
 
+/* Animación básica de rotación 360 grados */
 @keyframes spin-slow{
 from{
 transform:rotate(0deg);
@@ -807,8 +838,6 @@ transform:rotate(360deg);
 <div class="bg-layer"></div>
 <div id="stars"></div>
 
-<!-- RINGS -->
-
 <div class="deco-ring"
 style="width:600px;height:600px;border-color:var(--cyan);top:-200px;left:-200px;">
 </div>
@@ -816,8 +845,6 @@ style="width:600px;height:600px;border-color:var(--cyan);top:-200px;left:-200px;
 <div class="deco-ring"
 style="width:450px;height:450px;border-color:var(--purple);bottom:-120px;right:-120px;">
 </div>
-
-<!-- FLOAT OBJECTS -->
 
 <div class="float-obj"
 style="top:8%;left:2%;--fd:7s;--fc:var(--cyan)">
@@ -831,464 +858,309 @@ style="top:15%;right:3%;--fd:9s;--fc:var(--purple)">
 
 <div class="mural">
 
-<!-- HEADER -->
-
-<div class="header">
-
-<h1>Mural del Mes de Junio</h1>
-
-<div class="sub">
-Interactivo • Innovador • Realidad Virtual
-</div>
-
-<div class="scan-tag">
-⟳ ¡Escanea y Descubre!
-</div>
-
-</div>
-
-<div class="divider"></div>
-
-<div class="fecha-badge">
-<span>Junio 2024</span>
-</div>
-
-<!-- ICONS -->
-
-<div class="top-icons">
-
-<span style="color:var(--cyan)">📡</span>
-
-<span style="color:var(--purple)">⚙️</span>
-
-<span style="color:var(--yellow)">💡</span>
-
-<span style="color:var(--green)">🔬</span>
-
-<span style="color:var(--pink)">🥽</span>
-
-</div>
-
-<!-- GRID -->
-
-<div class="grid">
-
-<!-- PANEL 1 -->
-
-<div class="panel p1">
-
-<div class="corner c-tl"></div>
-<div class="corner c-tr"></div>
-<div class="corner c-bl"></div>
-<div class="corner c-br"></div>
-
-<div class="panel-number">01</div>
-
-<div class="panel-title">
-1. Fechas Importantes
-</div>
-
-<div class="panel-subtitle">
-Important Dates – Junio 2024
-</div>
-
-<!-- CARD -->
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-<img src="marina.jpg" alt="Marina">
-</div>
-
-<div class="date-info">
-
-<div class="date-num">1 JUN</div>
-
-<div class="date-name">
-Día de la Marina Nacional
-</div>
-
-<div class="date-desc">
-Homenaje a la Armada de México.
-</div>
-
-</div>
-</div>
-
-<!-- CARD -->
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-<img src="medio_ambiente.jpg" alt="Medio Ambiente">
-</div>
-
-<div class="date-info">
-
-<div class="date-num">5 JUN</div>
-
-<div class="date-name">
-Día Mundial del Medio Ambiente
-</div>
-
-<div class="date-desc">
-Protección del ecosistema global.
-</div>
-
-</div>
-</div>
-
-<!-- CARD -->
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-<img src="oceano.jpg" alt="Océano">
-</div>
-
-<div class="date-info">
-
-<div class="date-num">8 JUN</div>
-
-<div class="date-name">
-Día Mundial de los Océanos
-</div>
-
-<div class="date-desc">
-Celebración de la biodiversidad marina.
-</div>
-
-</div>
-</div>
-
-<!-- CARD -->
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-<img src="sangre.jpg" alt="Sangre">
-</div>
-
-<div class="date-info">
-
-<div class="date-num">14 JUN</div>
-
-<div class="date-name">
-Donante de Sangre
-</div>
-
-<div class="date-desc">
-Reconocimiento a donantes voluntarios.
-</div>
-
-</div>
-</div>
-
-<!-- CARD -->
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-<img src="padre.jpg" alt="Padre">
-</div>
-
-<div class="date-info">
-
-<div class="date-num">21 JUN</div>
-
-<div class="date-name">
-Día del Padre
-</div>
-
-<div class="date-desc">
-Celebración familiar.
-</div>
-
-</div>
-</div>
-
-<!-- CARD -->
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-<img src="solsticio.jpg" alt="Solsticio">
-</div>
-
-<div class="date-info">
-
-<div class="date-num">21 JUN</div>
-
-<div class="date-name">
-Solsticio de Verano
-</div>
-
-<div class="date-desc">
-El día más largo del año.
-</div>
-
-</div>
-</div>
-
-<!-- CARD -->
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-<img src="san_juan.jpg" alt="San Juan">
-</div>
-
-<div class="date-info">
-
-<div class="date-num">24 JUN</div>
-
-<div class="date-name">
-Día de San Juan
-</div>
-
-<div class="date-desc">
-Tradición popular de verano.
-</div>
-
-</div>
-</div>
-
-</div>
-
-<!-- PANEL 2 -->
-
-<div class="panel p2">
-
-<div class="panel-number">02</div>
-
-<div class="panel-title">
-2. Maestro de la semana
-</div>
-
-<div class="panel-subtitle">
-Nombre del Maestro – Tema Destacado
-</div>
-
-<div style="
-height:220px;
-border-radius:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:
-linear-gradient(160deg,#001a3a,#002244,#001133);
-border:2px solid var(--cyan);
-box-shadow:var(--gc);
-margin-bottom:20px;
-">
-
-<div style="text-align:center">
-
-<div style="
-  width:100%;
-  padding:6px;
-  border-radius:24px;
-  background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink));
-  box-shadow:
-    0 0 15px var(--cyan),
-    0 0 40px rgba(0,245,255,.5),
-    0 0 60px rgba(168,85,247,.4);
-  animation:neonFloat 4s ease-in-out infinite;
-">
-  <img 
-    src="profesor.jpg" 
-    alt="Profesor"
-    style="
-      width:100%;
-      height:200px;
-      object-fit:cover;
-      border-radius:18px;
-      display:block;
-      border:2px solid rgba(255,255,255,.15);
-    "
-  />
-</div>
-<div style="
-font-family:'Orbitron';
-letter-spacing:2px;
-color:var(--cyan), var(--purple), var(--pink);
-">
-Experiencia VR
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- PANEL 3 -->
-
-<div class="panel p3">
-
-<div class="panel-number">03</div>
-
-<div class="panel-title">
-3. Avisos y Convocatorias
-</div>
-
-<div class="panel-subtitle">
-Open Calls – Junio 2024
-</div>
-
-<div style="
-padding:16px;
-border-radius:12px;
-border:1px solid rgba(255,45,120,.35);
-background:rgba(255,45,120,.06);
-margin-bottom:14px;
-">
-
-<h3 style="
-font-family:'Orbitron';
-margin-bottom:8px;
-color:var(--pink);
-">
-Hackathon 2024
-</h3>
-
-<p style="font-size:.8rem">
-Evento de innovación tecnológica y robótica.
-</p>
-
-</div>
-
-<div style="
-padding:16px;
-border-radius:12px;
-border:1px solid rgba(255,140,0,.35);
-background:rgba(255,140,0,.06);
-">
-
-<h3 style="
-font-family:'Orbitron';
-margin-bottom:8px;
-color:var(--orange);
-">
-Foro Espacial Mexicano
-</h3>
-
-<p style="font-size:.8rem">
-Exploración espacial y satélites.
-</p>
-
-</div>
-
-</div>
-
-<!-- PANEL 4 -->
-
-<div class="panel p4">
-
-<div class="panel-number">04</div>
-
-<div class="panel-title">
-4. Ciencia y Tecnología
-</div>
-
-<div class="panel-subtitle">
-Science & Technology
-</div>
-
-<div style="
-display:flex;
-flex-direction:column;
-gap:12px;
-">
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-🧠
-</div>
-
-<div class="date-info">
-
-<div class="date-name">
-IA y Sostenibilidad
-</div>
-
-<div class="date-desc">
-Machine Learning aplicado al clima.
-</div>
-
-</div>
-
-</div>
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-🤖
-</div>
-
-<div class="date-info">
-
-<div class="date-name">
-Robótica
-</div>
-
-<div class="date-desc">
-Cobots quirúrgicos inteligentes.
-</div>
-
-</div>
-
-</div>
-
-<div class="date-card">
-
-<div class="date-icon-3d">
-🧬
-</div>
-
-<div class="date-info">
-
-<div class="date-name">
-Biotecnología
-</div>
-
-<div class="date-desc">
-CRISPR y edición genética.
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- BUTTON -->
-
-<button id="aiBtn">
-IA
-</button>
+   <div class="header">
+   
+   <h1>Mural del Mes de Junio</h1>
+   
+   <div class="sub">
+   Interactivo • Innovador • Realidad Virtual
+   </div>
+   
+   <div class="scan-tag">
+   ⟳ ¡Escanea y Descubre!
+   </div>
+   
+   </div>
+   
+   <div class="divider"></div>
+   
+   <div class="fecha-badge">
+   <span>Junio 2024</span>
+   </div>
+   
+   <div class="top-icons">
+   
+   <span style="color:var(--cyan)">📡</span>
+   
+   <span style="color:var(--purple)">⚙️</span>
+   
+   <span style="color:var(--yellow)">💡</span>
+   
+   <span style="color:var(--green)">🔬</span>
+   
+   <span style="color:var(--pink)">🥽</span>
+   
+   </div>
+   
+   <div class="grid">
+   
+      <div class="panel p1">
+      
+      <div class="corner c-tl"></div>
+      <div class="corner c-tr"></div>
+      <div class="corner c-bl"></div>
+      <div class="corner c-br"></div>
+      
+      <div class="panel-number">01</div>
+      
+      <div class="panel-title">
+      1. Fechas Importantes
+      </div>
+      
+      <div class="panel-subtitle">
+      Important Dates – Junio 2024
+      </div>
+      
+      <div class="date-card">
+      <div class="date-icon-3d">
+      <img src="marina.jpg" alt="Marina">
+      </div>
+      <div class="date-info">
+      <div class="date-num">1 JUN</div>
+      <div class="date-name">Día de la Marina Nacional</div>
+      <div class="date-desc">Homenaje a la Armada de México.</div>
+      </div>
+      </div>
+      
+      <div class="date-card">
+      <div class="date-icon-3d">
+      <img src="medio_ambiente.jpg" alt="Medio Ambiente">
+      </div>
+      <div class="date-info">
+      <div class="date-num">5 JUN</div>
+      <div class="date-name">Día Mundial del Medio Ambiente</div>
+      <div class="date-desc">Protección del ecosistema global.</div>
+      </div>
+      </div>
+      
+      <div class="date-card">
+      <div class="date-icon-3d">
+      <img src="oceano.jpg" alt="Océano">
+      </div>
+      <div class="date-info">
+      <div class="date-num">8 JUN</div>
+      <div class="date-name">Día Mundial de los Océanos</div>
+      <div class="date-desc">Celebración de la biodiversidad marina.</div>
+      </div>
+      </div>
+      
+      <div class="date-card">
+      <div class="date-icon-3d">
+      <img src="sangre.jpg" alt="Sangre">
+      </div>
+      <div class="date-info">
+      <div class="date-num">14 JUN</div>
+      <div class="date-name">Donante de Sangre</div>
+      <div class="date-desc">Reconocimiento a donantes voluntarios.</div>
+      </div>
+      </div>
+      
+      <div class="date-card">
+      <div class="date-icon-3d">
+      <img src="padre.jpg" alt="Padre">
+      </div>
+      <div class="date-info">
+      <div class="date-num">21 JUN</div>
+      <div class="date-name">Día del Padre</div>
+      <div class="date-desc">Celebración familiar.</div>
+      </div>
+      </div>
+      
+      <div class="date-card">
+      <div class="date-icon-3d">
+      <img src="solsticio.jpg" alt="Solsticio">
+      </div>
+      <div class="date-info">
+      <div class="date-num">21 JUN</div>
+      <div class="date-name">Solsticio de Verano</div>
+      <div class="date-desc">El día más largo del año.</div>
+      </div>
+      </div>
+      
+      <div class="date-card">
+      <div class="date-icon-3d">
+      <img src="san_juan.jpg" alt="San Juan">
+      </div>
+      <div class="date-info">
+      <div class="date-num">24 JUN</div>
+      <div class="date-name">Día de San Juan</div>
+      <div class="date-desc">Tradición popular de verano.</div>
+      </div>
+      </div>
+      
+      </div>
+      
+      <div class="panel p2">
+      
+      <div class="panel-number">02</div>
+      
+      <div class="panel-title">
+      2. Maestro de la semana
+      </div>
+      
+      <div class="panel-subtitle">
+      Nombre del Maestro – Tema Destacado
+      </div>
+      
+      <div style="
+      height:220px;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:
+      linear-gradient(160deg,#001a3a,#002244,#001133);
+      border:2px solid var(--cyan);
+      box-shadow:var(--gc);
+      margin-bottom:20px;
+      ">
+      
+      <div style="text-align:center">
+      
+      <div style="
+        width:100%;
+        padding:6px;
+        border-radius:24px;
+        background:linear-gradient(135deg,var(--cyan),var(--purple),var(--pink));
+        box-shadow:
+          0 0 15px var(--cyan),
+          0 0 40px rgba(0,245,255,.5),
+          0 0 60px rgba(168,85,247,.4);
+        animation:neonFloat 4s ease-in-out infinite;
+      ">
+        <img 
+          src="profesor.jpg" 
+          alt="Profesor"
+          style="
+            width:100%;
+            height:200px;
+            object-fit:cover;
+            border-radius:18px;
+            display:block;
+            border:2px solid rgba(255,255,255,.15);
+          "
+        />
+      </div>
+      <div style="
+      font-family:'Orbitron';
+      letter-spacing:2px;
+      color:var(--cyan), var(--purple), var(--pink);
+      ">
+      Experiencia VR
+      </div>
+      
+      </div>
+      
+      </div>
+      
+      </div>
+      
+      <div class="panel p3">
+      
+      <div class="panel-number">03</div>
+      
+      <div class="panel-title">
+      3. Avisos y Convocatorias
+      </div>
+      
+      <div class="panel-subtitle">
+      Open Calls – Junio 2024
+      </div>
+      
+      <div style="
+      padding:16px;
+      border-radius:12px;
+      border:1px solid rgba(255,45,120,.35);
+      background:rgba(255,45,120,.06);
+      margin-bottom:14px;
+      ">
+      <h3 style="font-family:'Orbitron';margin-bottom:8px;color:var(--pink);">
+      Hackathon 2024
+      </h3>
+      <p style="font-size:.8rem">
+      Evento de innovación tecnológica y robótica.
+      </p>
+      </div>
+      
+      <div style="
+      padding:16px;
+      border-radius:12px;
+      border:1px solid rgba(255,140,0,.35);
+      background:rgba(255,140,0,.06);
+      ">
+      <h3 style="font-family:'Orbitron';margin-bottom:8px;color:var(--orange);">
+      Foro Espacial Mexicano
+      </h3>
+      <p style="font-size:.8rem">
+      Exploración espacial y satélites.
+      </p>
+      </div>
+      
+      </div>
+      
+      <div class="panel p4">
+      
+      <div class="panel-number">04</div>
+      
+      <div class="panel-title">
+      4. Ciencia y Tecnología
+      </div>
+      
+      <div class="panel-subtitle">
+      Science & Technology
+      </div>
+      
+      <div style="display:flex;flex-direction:column;gap:12px;">
+      
+      <div class="date-card">
+      <div class="date-icon-3d">🧠</div>
+      <div class="date-info">
+      <div class="date-name">IA y Sostenibilidad</div>
+      <div class="date-desc">Machine Learning aplicado al clima.</div>
+      </div>
+      </div>
+      
+      <div class="date-card">
+      <div class="date-icon-3d">🤖</div>
+      <div class="date-info">
+      <div class="date-name">Robótica</div>
+      <div class="date-desc">Cobots quirúrgicos inteligentes.</div>
+      </div>
+      </div>
+      
+      <div class="date-card">
+      <div class="date-icon-3d">🧬</div>
+      <div class="date-info">
+      <div class="date-name">Biotecnología</div>
+      <div class="date-desc">CRISPR y edición genética.</div>
+      </div>
+      </div>
+      
+      </div>
+      
+      </div>
+   
+   </div>
+   
+   <button id="aiBtn">IA</button>
 
 </div>
 
 <script>
 
 /* ═══════════════════════════════════════
-   STARS
-═══════════════════════════════════════ */
+   LÓGICA GENERADORA DE ESTRELLAS DE FONDO
+   ═══════════════════════════════════════ */
 
 const starsEl=document.getElementById('stars');
 
+// Crea aleatoriamente 100 estrellas con posiciones y retrasos de animación variables
 for(let i=0;i<100;i++){
 
 const s=document.createElement('div');
-
 s.className='star';
 
+// Asignación de tamaño aleatorio a la estrella
 const sz=Math.random()*2.5+.4;
 
 s.style.cssText=`
@@ -1296,8 +1168,8 @@ width:${sz}px;
 height:${sz}px;
 top:${Math.random()*100}%;
 left:${Math.random()*100}%;
---d:${(Math.random()*3+1.5).toFixed(1)}s;
-animation-delay:${(Math.random()*4).toFixed(1)}s;
+--d:${(Math.random()*3+1.5).toFixed(1)}s; /* Duración aleatoria de parpadeo */
+animation-delay:${(Math.random()*4).toFixed(1)}s; /* Retraso de animación aleatorio */
 `;
 
 starsEl.appendChild(s);
@@ -1305,18 +1177,20 @@ starsEl.appendChild(s);
 }
 
 /* ═══════════════════════════════════════
-   3D PANELS
-═══════════════════════════════════════ */
+   EFECTO PARALLAX INTERACTIVO 3D EN PANELES
+   ═══════════════════════════════════════ */
 
 document.querySelectorAll('.panel').forEach(panel=>{
 
+// Calcula las coordenadas del mouse sobre el panel para inclinarlo tridimensionalmente
 panel.addEventListener('mousemove',e=>{
 
 const rect=panel.getBoundingClientRect();
 
-const x=e.clientX-rect.left;
-const y=e.clientY-rect.top;
+const x=e.clientX-rect.left; // Posición horizontal del mouse dentro del panel
+const y=e.clientY-rect.top;  // Posición vertical del mouse dentro del panel
 
+// Transforma la posición en grados de rotación de -5 a 5 grados
 const rotateY=((x/rect.width)-0.5)*10;
 const rotateX=((y/rect.height)-0.5)*-10;
 
@@ -1329,6 +1203,7 @@ rotateY(${rotateY}deg)
 
 });
 
+// Restaura la posición original plana cuando el mouse sale del panel
 panel.addEventListener('mouseleave',()=>{
 
 panel.style.transform=
@@ -1339,23 +1214,21 @@ panel.style.transform=
 });
 
 /* ═══════════════════════════════════════
-   INTERACTIVE CLICK
-═══════════════════════════════════════ */
+   EFECTO VISUAL DE SELECCIÓN EN TARJETAS DE FECHA
+   ═══════════════════════════════════════ */
 
 document.querySelectorAll('.date-card').forEach(el=>{
 
+// Cambia brevemente el color de fondo para indicar una pulsación interactiva al hacer clic
 el.addEventListener('click',()=>{
 
 el.style.transition='background .1s';
-
 const origBg=el.style.background;
-
 el.style.background='rgba(0,245,255,0.12)';
 
+// Devuelve el fondo original tras medio segundo
 setTimeout(()=>{
-
 el.style.background=origBg;
-
 },500);
 
 });
@@ -1363,16 +1236,19 @@ el.style.background=origBg;
 });
 
 /* ═══════════════════════════════════════
-   FLOATING OBJECTS PARALLAX
-═══════════════════════════════════════ */
+   EFECTO PARALLAX DE FONDO BASADO EN EL MOVIMIENTO DEL MOUSE
+   ═══════════════════════════════════════ */
 
 document.addEventListener('mousemove',e=>{
 
+// Calcula la desviación del cursor respecto al centro de la pantalla
 const mx=(e.clientX/window.innerWidth-.5)*18;
 const my=(e.clientY/window.innerHeight-.5)*10;
 
+// Desplaza ligeramente los elementos flotantes en base al cursor
 document.querySelectorAll('.float-obj').forEach((o,i)=>{
 
+// Alterna la dirección del movimiento según el índice del objeto
 const d=(i%2===0)?1:-1;
 
 o.style.transform=
@@ -1383,13 +1259,14 @@ o.style.transform=
 });
 
 /* ═══════════════════════════════════════
-   IA BUTTON
-═══════════════════════════════════════ */
+   MANEJADOR DE EVENTO PARA EL BOTÓN DE IA
+   ═══════════════════════════════════════ */
 
 const aiBtn=document.getElementById('aiBtn');
 
 aiBtn.addEventListener('click',()=>{
 
+// Muestra una ventana emergente nativa al activarse el botón
 alert('Bienvenido al sistema IA futurista 🚀');
 
 });
