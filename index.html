@@ -412,19 +412,19 @@ line-height:1.4;
 
 .btn-visitar {
 display: inline-block;
-margin-top: 12px;
-padding: 6px 16px;
+margin-top: 8px;
+padding: 5px 14px;
 font-family: 'Orbitron', sans-serif;
-font-size: 0.75rem;
+font-size: 0.7rem;
 font-weight: 700;
 color: var(--white);
 text-transform: uppercase;
 text-decoration: none;
-letter-spacing: 2px;
+letter-spacing: 1px;
 border: 1px solid var(--pink);
 background: rgba(255, 45, 120, 0.15);
-border-radius: 6px;
-box-shadow: 0 0 8px rgba(255, 45, 120, 0.2);
+border-radius: 4px;
+box-shadow: 0 0 6px rgba(255, 45, 120, 0.2);
 transition: all 0.3s ease;
 cursor: pointer;
 }
@@ -432,6 +432,32 @@ cursor: pointer;
 .btn-visitar:hover {
 background: var(--pink);
 box-shadow: var(--gp);
+transform: scale(1.03);
+}
+
+.btn-cyan-cyber {
+display: inline-block;
+margin-top: 8px;
+padding: 5px 14px;
+font-family: 'Orbitron', sans-serif;
+font-size: 0.7rem;
+font-weight: 700;
+color: var(--white);
+text-transform: uppercase;
+text-decoration: none;
+letter-spacing: 1px;
+border: 1px solid var(--cyan);
+background: rgba(0, 245, 255, 0.15);
+border-radius: 4px;
+box-shadow: 0 0 6px rgba(0, 245, 255, 0.2);
+transition: all 0.3s ease;
+cursor: pointer;
+}
+
+.btn-cyan-cyber:hover {
+background: var(--cyan);
+color: #000;
+box-shadow: var(--gc);
 transform: scale(1.03);
 }
 
@@ -547,7 +573,6 @@ to{ transform:rotate(360deg); }
    
    <div class="grid">
    
-      <!-- PANEL 1: FECHAS IMPORTANTES -->
       <div class="panel p1">
          <div class="corner c-tl"></div>
          <div class="corner c-tr"></div>
@@ -622,73 +647,78 @@ to{ transform:rotate(360deg); }
          </div>
       </div>
       
-      <!-- PANEL 2: MAESTRO DE LA SEMANA (AJUSTADO PARA MOSTRAR FOTO COMPLETA Y MÁS GRANDE) -->
       <div class="panel p2">
          <div class="panel-number">02</div>
          <div class="panel-title">2. Maestro de la semana</div>
-         <div class="panel-subtitle">Nombre del Maestro</div>
+         <div class="panel-subtitle">Profesor Juan Pérez</div>
          
          <div style="height:260px; width:100%; border-radius:12px; display:flex; align-items:center; justify-content:center; background: linear-gradient(160deg,#001a3a,#002244,#001133); border:2px solid var(--green); box-shadow:var(--gg); margin-bottom:20px; overflow:hidden;">
             <div style="text-align:center; width: 100%; height: 100%; padding: 10px;">
                <div style="width:100%; height:100%; border-radius:8px; background:linear-gradient(135deg,var(--green),var(--blue)); padding:3px; box-shadow: 0 0 15px rgba(57,255,20,0.3); animation:neonFloat 4s ease-in-out infinite;">
-                  <img src="profesor.jpg" alt="Profesor" style="width:100%; height:100%; object-fit:contain; border-radius:6px; display:block; background:#000814;"/>
+                  <img src="profesor.jpg" alt="Profesor Juan Pérez" style="width:100%; height:100%; object-fit:contain; border-radius:6px; display:block; background:#000814;"/>
                </div>
             </div>
          </div>
+         <p style="text-align:center;font-size:0.75rem;letter-spacing:1px;color:rgba(232,244,255,0.5);text-transform:uppercase;">Ingeniería en Tecnologías de la Información e Innovación Digital</p>
       </div>
       
-      <!-- PANEL 3: CONVOCATORIAS -->
       <div class="panel p3">
          <div class="panel-number">03</div>
          <div class="panel-title">3. Avisos y Convocatorias</div>
          <div class="panel-subtitle">Open Calls – Junio 2026</div>
          
-         <div style="padding:16px; border-radius:12px; border:1px solid rgba(255,45,120,.35); background:rgba(255,45,120,.06); margin-bottom:14px;">
-            <h3 style="font-family:'Orbitron';margin-bottom:8px;color:var(--pink);">Centro público de formación IA</h3>
-            <p style="font-size:.8rem; line-height: 1.4;">
-               Oferta educativa.<br>
-               • INTELIGENCIA ARTIFICIAL<br>
-               • ANÁLISIS DE DATOS<br>
-               • NUBE<br>
-               • CIBERSEGURIDAD<br>
-               • REDES E INFRAESTRUCTURA
+         <div style="padding:16px; border-radius:12px; border:1px solid rgba(255,45,120,.4); background:rgba(255,45,120,.06); margin-bottom:14px;">
+            <h3 style="font-family:'Orbitron';margin-bottom:8px;color:var(--pink);font-size:0.95rem;letter-spacing:1px;">BECA OPENBANK TECH MANUTENCIÓN</h3>
+            <p style="font-size:.8rem; line-height: 1.5; margin-bottom:10px; color:var(--white);">
+               Te apoya con <strong style="color:var(--yellow); font-size:0.85rem;">$4,000 MXN</strong> para que compres una compu y sigas estudiando.<br><br>
+               <span style="color:var(--cyan); font-weight:700;">INSCRÍBETE ANTES DEL: 5 DE JULIO 2026</span>
             </p>
-            <a href="https://www.mexia.gob.mx/convocatoria/" target="_blank" class="btn-visitar">Visitar</a>
+            <a href="https://app.santanderopenacademy.com/es/program/openbank-tech-manutencion?utm_source=CRM_Country&utm_medium=Email&utm_campaign=OpenbankTechManutencion2026_Mexico_Internalcomm" target="_blank" class="btn-visitar">Inscribirse</a>
+            
+            <div style="margin-top:14px; padding-top:12px; border-top:1px dashed rgba(255,45,120,0.3); font-size:0.75rem; color:rgba(232,244,255,0.7); line-height:1.4;">
+               <strong style="color:var(--pink);">NOTIFICACIÓN OBLIGATORIA:</strong><br>
+               En caso de inscribirse, por favor notificar a la Dirección nombre, matrícula, Programa Educativo y captura de pantalla del registro.<br>
+               • <strong>WhatsApp:</strong> +52 722 435 5789<br>
+               • <strong>Correo:</strong> ingenieriaTI@upvt.edu.mx
+            </div>
          </div>
-         
-         <div style="padding:16px; border-radius:12px; border:1px solid rgba(255,140,0,.35); background:rgba(255,140,0,.06);"></div>
       </div>
       
-      <!-- PANEL 4: CIENCIA Y TECNOLOGÍA -->
       <div class="panel p4">
          <div class="panel-number">04</div>
-         <div class="panel-title">4. Ciencia y Tecnología</div>
-         <div class="panel-subtitle">Science & Technology</div>
+         <div class="panel-title">4. Veranos y Eventos Científicos</div>
+         <div class="panel-subtitle">Science & Research Calls</div>
          
          <div style="display:flex;flex-direction:column;gap:12px;">
-            <div class="date-card">
-               <div class="date-icon-3d">🧠</div>
-               <div class="date-info">
-                  <div class="date-name">IA y Sostenibilidad</div>
-                  <div class="date-desc">Machine Learning aplicado al clima.</div>
+            
+            <div style="padding:12px; border-radius:10px; background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.2);">
+               <h4 style="font-size:0.82rem; font-weight:700; color:var(--cyan); text-transform:uppercase;">1. Verano Internacional (VIICyT)</h4>
+               <div style="display:flex; gap:8px; margin-top:6px;">
+                  <a href="https://teshuixquilucan.edomex.gob.mx/sites/teshuixquilucan.edomex.gob.mx/files/files/TESH/2026/CONVOCATORIA-VERANO-INTERNACIONAL-.pdf" target="_blank" class="btn-cyan-cyber">Detalles</a>
+                  <a href="https://veranocientifico-cenidet-tecnm.com/" target="_blank" class="btn-cyan-cyber">Registrarse</a>
                </div>
             </div>
             
-            <div class="date-card">
-               <div class="date-icon-3d">🤖</div>
-               <div class="date-info">
-                  <div class="date-name">Robótica</div>
-                  <div class="date-desc">Cobots quirúrgicos inteligentes.</div>
-               </div>
+            <div style="padding:12px; border-radius:10px; background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.2);">
+               <h4 style="font-size:0.82rem; font-weight:700; color:var(--white); text-transform:uppercase;">2. Verano de la Academia Mexicana de Ciencias</h4>
+               <a href="https://amc.edu.mx/amc/index.php?option=com_content&view=article&id=139&Itemid=80" target="_blank" class="btn-cyan-cyber">Visitar</a>
             </div>
             
-            <div class="date-card">
-               <div class="date-icon-3d">🧬</div>
-               <div class="date-info">
-                  <div class="date-name">Biotecnología</div>
-                  <div class="date-desc">CRISPR y edición genética.</div>
-               </div>
+            <div style="padding:12px; border-radius:10px; background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.2);">
+               <h4 style="font-size:0.82rem; font-weight:700; color:var(--white); text-transform:uppercase;">3. ExpoCiencias Tlaxcala 2026</h4>
+               <a href="https://laredmex.org/storage/Eventos_Regionales/32/convocatoria.pdf" target="_blank" class="btn-cyan-cyber">Visitar Convocatoria</a>
             </div>
+            
+            <div style="padding:12px; border-radius:10px; background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.2);">
+               <h4 style="font-size:0.82rem; font-weight:700; color:var(--white); text-transform:uppercase;">4. ExpoCiencias Yucatán 2026</h4>
+               <a href="https://ciencia.yucatan.gob.mx/convocatorias/expociencias-yucatan-2026/" target="_blank" class="btn-cyan-cyber">Visitar</a>
+            </div>
+            
+            <div style="padding:12px; border-radius:10px; background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.2);">
+               <h4 style="font-size:0.82rem; font-weight:700; color:var(--white); text-transform:uppercase;">5. 5º Congreso Internacional de Enseñanza Universitaria (CIENU)</h4>
+               <a href="https://cienu.upp.edu.mx/" target="_blank" class="btn-cyan-cyber">Visitar Sitio</a>
+            </div>
+
          </div>
       </div>
    
